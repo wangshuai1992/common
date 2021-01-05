@@ -17,7 +17,7 @@ public class RedisUtil {
             // redisTemplate对应的bean的名称
             String redisBeanName = ApplicationContextUtil.getProperty("xin.allonsy.redis.beanname");
             if (StringUtils.isEmpty(redisBeanName)) {
-                redisBeanName = "redisTemplate";
+                redisBeanName = "allonsyStringRedisTemplate";
             }
             redisTemplate = (RedisTemplate) ApplicationContextUtil.getBean(redisBeanName);
         }
