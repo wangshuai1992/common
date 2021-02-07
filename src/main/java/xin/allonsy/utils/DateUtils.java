@@ -1,5 +1,6 @@
 package xin.allonsy.utils;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 
 import java.text.DecimalFormat;
@@ -13,6 +14,7 @@ import java.util.*;
  * @author wangshuai
  * @date 2019-09-06 15:24
  */
+@Slf4j
 public class DateUtils {
 
     /**
@@ -99,7 +101,7 @@ public class DateUtils {
             }
             return getSdf(pattern).parse(dateStr);
         } catch (ParseException e) {
-            throw new RuntimeException("解析日期出错");
+            throw new RuntimeException("解析日期出错", e);
         }
     }
 
