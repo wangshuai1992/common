@@ -2,9 +2,7 @@ package xin.allonsy.utils;
 
 import org.apache.commons.lang3.StringUtils;
 
-import java.util.Map;
-import java.util.SortedMap;
-import java.util.TreeMap;
+import java.util.*;
 
 /**
  * CommonUtil
@@ -46,6 +44,25 @@ public class CommonUtil {
         double randomWeight = weightMap.lastKey() * Math.random();
         SortedMap<Double, T> tailMap = weightMap.tailMap(randomWeight, false);
         return weightMap.get(tailMap.firstKey());
+    }
+
+    /**
+     * 列表分片
+     *
+     * @param list
+     * @param chunkSize
+     * @param <T>
+     * @return
+     */
+    public static <T> List<List<T>> chunkList(List<T> list, int chunkSize) {
+        if (chunkSize <= 0) {
+            throw new IllegalArgumentException("Invalid chunk size: " + chunkSize);
+        }
+        List<List<T>> chunkList = new ArrayList<>(list.size() / chunkSize);
+        for (int i = 0; i < list.size(); i += chunkSize) {
+            chunkList.add(list.subList(i, i + chunkSize >= list.size() ? list.size() : i + chunkSize));
+        }
+        return chunkList;
     }
 
 }
