@@ -1,7 +1,12 @@
 package xin.allonsy.utils;
 
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.BeanWrapper;
+import org.springframework.beans.BeanWrapperImpl;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.*;
 
 /**
@@ -63,6 +68,42 @@ public class CommonUtil {
             chunkList.add(list.subList(i, i + chunkSize >= list.size() ? list.size() : i + chunkSize));
         }
         return chunkList;
+    }
+
+    /**
+     * 异常堆栈toStirng
+     *
+     * @param e
+     * @return
+     */
+    public static String stackTraceToString(Throwable e) {
+        StringWriter sw = new StringWriter();
+        e.printStackTrace(new PrintWriter(sw));
+        return sw.toString();
+    }
+
+    /**
+     * bean copy  为null的字段不copy
+     *
+     * @param src
+     * @param target
+     */
+    public static void copyPropertiesIgnoreNull(Object src, Object target) {
+        BeanUtils.copyProperties(src, target, getNullPropertyNames(src));
+    }
+
+    private static String[] getNullPropertyNames(Object source) {
+        final BeanWrapper src = new BeanWrapperImpl(source);
+        java.beans.PropertyDescriptor[] pds = src.getPropertyDescriptors();
+
+        Set<String> emptyNames = new HashSet<>();
+        for (java.beans.PropertyDescriptor pd : pds) {
+            Object srcValue = src.getPropertyValue(pd.getName());
+            if (srcValue == null)
+                emptyNames.add(pd.getName());
+        }
+        String[] result = new String[emptyNames.size()];
+        return emptyNames.toArray(result);
     }
 
 }
