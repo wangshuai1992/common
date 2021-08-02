@@ -18,7 +18,16 @@ public class BaseJson {
     /**
      * 有错为错误信息，没错为成功提示信息
      */
-    private String message = "操作成功！";
+    private String message = "success";
+
+    public BaseJson() {
+    }
+
+    public BaseJson(String errMsg) {
+        code = "-1";
+        hasError = true;
+        this.message = errMsg;
+    }
 
     /**
      * @return the hasError
