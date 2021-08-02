@@ -142,6 +142,10 @@ public class CustomLoggerInterceptor implements InvocationHandler {
         for (Map.Entry<String, String> entry : paramValueAndTypaMap.entrySet()) {
             String type = entry.getValue();
             String paramValue = entry.getKey();
+            if (paramValue.startsWith(" ")) {
+                // 去掉参数开头的空格
+                paramValue = paramValue.substring(1);
+            }
             if ("String".equals(type)) {
                 paramValue = "\"" + paramValue + "\"";
             }
