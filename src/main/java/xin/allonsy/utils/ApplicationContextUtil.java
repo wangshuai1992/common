@@ -30,6 +30,10 @@ public class ApplicationContextUtil implements ApplicationContextAware, Environm
         return context.getBean(name);
     }
 
+    public static <T> T getBean(String name, Class<T> clazz) {
+        return context.getBean(name, clazz);
+    }
+
     public static <T> T getBean(Class<T> clazz) {
         return context.getBean(clazz);
     }
